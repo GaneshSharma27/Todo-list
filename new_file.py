@@ -1,10 +1,12 @@
-# Making a To-Do list App which will store your task's data in a csv or txt file
+# Making a To-Do list App that will store your task's data in a CSV or txt file
 # You can add more tasks, delete tasks and list them all together
 
+# Function for adding tasks
 def add_tasks(str):
     with open("new_file_tasks.txt", "a") as file:
         file.write(f"{str}\n")
 
+# Function for removing tasks
 def remove_tasks(int):
     tasks_list = []
     with open("new_file_tasks.txt", "r") as file:
@@ -18,6 +20,7 @@ def remove_tasks(int):
     except IndexError:
         print("Please select the number within task range!")
 
+# Function for listing all tasks
 def list_tasks():
     with open("new_file_tasks.txt", "r") as file:
         all_tasks = file.readlines()
@@ -30,6 +33,7 @@ def list_tasks():
             print(f"{i + 1}. {all_tasks[i].strip()}")
         print("\n")
 
+# Function for clearing all tasks
 def clear_all_tasks():
     with open("new_file_tasks.txt", "w") as file:
         file.close()

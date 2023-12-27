@@ -34,4 +34,80 @@ def remove_tasks(int):
 ```
 * The `remove_tasks()` takes `int` as a function argument which stores the task's index that has to be deleted.
 * What I came to when deleting the task is that first I'll declare an empty list `tasks_list = []` and using `open()` I'll open `"new_file_tasks.txt"` in read mode using `"r"`.
-* And then using the `for` loop to iterate each line and append them to the `tasks_list = []` and clear the trailing whitespaces using the `rstrip()` function.
+* And then using the `for` loop to iterate each line and append them to the `tasks_list = []` and clear the trailing whitespaces using the `tasks_list.append(line.rstrip())` function.
+* Now that I've appended all the tasks in the list in the form of a string in the `try` block using `tasks_list.pop(int - 1)` this will pop out the task's index which was entered by the user.
+* And now `with open("new_file_tasks.txt")` will open the .txt file in write mode using `"w"` and using `for` loop iterate each task in the `tasks_list = []` and write them into `"new_file_tasks.txt"` and after each task being added linebreak `"\n"`.
+* In the `except` block I've handled `IndexError` which can happen if the user knowingly/unknowingly tries to enter an index that is greater than the total number of tasks.
+
+### **In `list_tasks()` function:**
+```
+def list_tasks():
+    with open("new_file_tasks.txt", "r") as file:
+        all_tasks = file.readlines()
+    
+    print("\nYour tasks:")
+    if (len(all_tasks) == 0):
+        print("----No tasks entered!----\n")
+    else:
+        for i in range(0, len(all_tasks)):
+            print(f"{i + 1}. {all_tasks[i].strip()}")
+        print("\n")
+```
+* Opening all the tasks using `open("new_file_tasks.txt", "r")` function in read mode using `"r"`.
+* Now, read all the tasks into a list `all_tasks` by assigning it with `file.readlines()`.
+* Then, using conditionals, check if there are no tasks by using `len(all_tasks) == 0` and then print "---No tasks entered!---".
+* Else, using `for` loop in `range(0, len(all_tasks))` prints all the tasks by striping the whitespaces using the `strip()` function and listing them in numbered order.
+
+### **In `clear_all_tasks()` function:**
+```
+def clear_all_tasks():
+    with open("new_file_tasks.txt", "w") as file:
+        file.close()
+```
+* Opening file with `open()` function and in write mode `"w"` and if we close the file without entering anything then it'll clear the file contents.
+* Mind you, that while using `"w"` opens the file in *writing mode* and anything you save will erase the previous content and then rewrite it while `"a"` will open the file *append* mode this will append all the changes you make without making any changes to the previous content in the file.
+
+Now at last,
+### **In `main()` body:**
+```
+while True:
+    try:
+        list_tasks()
+        print("----Please select any one!----")
+        print("1. Add task\n2. Remove a tasks\n3. List all tasks\n4. Clear all tasks")
+        choose_command = int(input("Choose any number from 1, 2, 3 and 4: "))
+        match(choose_command):
+            case 1:
+                print("-------------------------------------------")
+                task = input("Task: ")
+                add_tasks(task)
+            case 2:
+                print("-------------------------------------------")
+                remove_task_number = int(input("\nTask's number you want to remove: "))
+                remove_tasks(remove_task_number)
+            case 3:
+                print("-------------------------------------------")
+                list_tasks()
+            case 4:
+                clear_all_tasks()
+            case _:
+                print("Enter values from 1, 2 and 3!")
+    except ValueError:
+        print("Only integer values are acceptable!")
+        pass
+    print("-------------------------------------------")
+```
+* I'm using a `while` loop to keep the user prompted to choose from the options to add, remove, list and clear tasks.
+* In the `try` block using the `choose_command` variable I'm taking integer input from the user for choosing between:
+  1. Add task.
+  2. Remove a task.
+  3. List all tasks.
+  4. Clear all tasks.
+* If the user maliciously enters a value other than integer the program won't crash but again prompt the user with the message "Only integer values are acceptable!" and if they enter a value other than 1, 2, 3 and 4 then the program will again prompt the user "Enter values from 1, 2, 3 and 4!".
+* If the user enters "1" as input then the` case 1` block will be executed and it asks the user to enter the task, he/she wants to be stored. And then pass it as a function argument in the `add_tasks()` function.
+* In `case 2` first I've declared a variable `remove_task number` which takes an integer input of the task's index you want to delete and then this variable is taken as a function argument by `remove_tasks()`.
+* In `case 3` I've made a `list_tasks()` function call.
+* In `case 4` I've made a `clear_all_tasks()` function call.
+
+# Here's the output of the program:
+https://github.com/GaneshSharma27/Todo-list/assets/90471588/752437be-71f9-4b2b-9424-c9c4b19cb5e4
